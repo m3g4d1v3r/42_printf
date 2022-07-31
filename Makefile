@@ -1,8 +1,14 @@
 SRCS	= ft_printf.c \
-		  ft_puthex_fd.c \
-		  ft_putint_fd.c \
-		  ft_putuint_fd.c \
-		  ft_putptr_fd.c
+		  src/parse/ft_parse_chr.c \
+		  src/parse/ft_parse_hex.c \
+		  src/parse/ft_parse_int.c \
+		  src/parse/ft_parse_ptr.c \
+		  src/parse/ft_parse_str.c \
+		  src/parse/ft_parse_uint.c \
+		  src/putnbr/ft_puthex_fd.c \
+		  src/putnbr/ft_putint_fd.c \
+		  src/putnbr/ft_putptr_fd.c \
+		  src/putnbr/ft_putuint_fd.c
 OBJS	= ${SRCS:.c=.o}
 INCD	= ./
 NAME	= libftprintf.a
@@ -32,3 +38,4 @@ re:			fclean all
 
 test:	${NAME}
 			gcc -L./ test_src/printf.c -lcriterion -lpthread -lftprintf -o test.out && ./test.out && rm test.out
+
