@@ -6,7 +6,7 @@
 /*   By: msubtil- <msubtil-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:08:37 by msubtil-          #+#    #+#             */
-/*   Updated: 2022/07/27 21:55:27 by msubtil-         ###   ########.fr       */
+/*   Updated: 2022/07/31 12:00:56 by msubtil-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ void	process_pointer(va_list *args_ptr, t_state *format_flag, char chr, int *chr
 
 void	process_hex(va_list *args_ptr, t_state *format_flag, char chr, int *chrs_written)
 {
-	unsigned long long	the_hex;
+	unsigned int	the_hex;
 
 	if (*format_flag == DONE)
 		return ;
 	if (chr == 'x' || chr == 'X')
 	{
-		the_hex = va_arg(*args_ptr, unsigned long long);
+		the_hex = va_arg(*args_ptr, unsigned int);
 		if (chr == 'x')
 			(*chrs_written) += ft_puthex_down_fd(the_hex, 1);
 		else

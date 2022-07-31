@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putptr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msubtil- <msubtil-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/19 23:54:45 by msubtil-          #+#    #+#             */
-/*   Updated: 2022/07/31 12:17:14 by msubtil-         ###   ########.fr       */
+/*   Created: 2022/07/31 12:13:30 by msubtil-          #+#    #+#             */
+/*   Updated: 2022/07/31 12:18:44 by msubtil-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static unsigned int	ft_base_hex_nbr(unsigned int n)
+static unsigned long long	ft_base_hexptr_nbr(unsigned long long n)
 {
-	unsigned int	base;
+	unsigned long long	base;
 
 	base = 1;
 	while (n >= 0x10)
@@ -25,13 +25,13 @@ static unsigned int	ft_base_hex_nbr(unsigned int n)
 	return (base);
 }
 
-static int	ft_puthex_fd(unsigned int n, const char *hex_base, int fd)
+static int	ft_puthexptr_fd(unsigned long long n, const char *hex_base, int fd)
 {
-	unsigned int	nbr_base;
-	unsigned int	chrs_written;
+	unsigned long long	nbr_base;
+	unsigned long long	chrs_written;
 
 	chrs_written = 0;
-	nbr_base = ft_base_hex_nbr(n);
+	nbr_base = ft_base_hexptr_nbr(n);
 	while (nbr_base)
 	{
 		write(fd, &hex_base[(n / nbr_base) % 0x10], 1);
@@ -41,16 +41,14 @@ static int	ft_puthex_fd(unsigned int n, const char *hex_base, int fd)
 	return (chrs_written);
 }
 
-int	ft_puthex_upper_fd(unsigned int n, int fd)
+int	ft_putptr_fd(void *ptr, int fd)
 {
-	static const char	*hex_uppercase_base = "0123456789ABCDEF";
-
-	return (ft_puthex_fd(n, hex_uppercase_base, fd));
-}
-
-int	ft_puthex_down_fd(unsigned int n, int fd)
-{
-	static const char	*hex_downcase_base = "0123456789abcdef";
-
-	return (ft_puthex_fd(n, hex_downcase_base, fd));
+	static const char	*hex_base = "0123456789abcdef";
+	if (ptr == NULL)
+	{
+		write(fd, "(nil)", 5);
+		return (5);
+	}
+	write(fd, "0x", 2);
+	return (ft_puthexptr_fd((unsigned long long) ptr, hex_base, fd) + 2);
 }
