@@ -6,7 +6,7 @@
 /*   By: msubtil- <msubtil-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 21:08:37 by msubtil-          #+#    #+#             */
-/*   Updated: 2022/07/31 12:00:56 by msubtil-         ###   ########.fr       */
+/*   Updated: 2022/07/31 12:32:34 by msubtil-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,24 @@ void	process_int(va_list *args_ptr, t_state *format_flag, char chr, int *chrs_wr
 
 	if (*format_flag == DONE)
 		return ;
-	if (chr == 'd')
+	if (chr == 'd' || chr == 'i')
 	{
 		the_integer = va_arg(*args_ptr, int);
 		(*chrs_written) += ft_putint_fd(the_integer, 1);
+		*format_flag = DONE;
+	}
+}
+
+void	process_uint(va_list *args_ptr, t_state *format_flag, char chr, int *chrs_written)
+{
+	unsigned int	the_uint;
+
+	if (*format_flag == DONE)
+		return ;
+	if (chr == 'u')
+	{
+		the_uint = va_arg(*args_ptr, unsigned int);
+		(*chrs_written) += ft_putuint_fd(the_uint, 1);
 		*format_flag = DONE;
 	}
 }
@@ -137,6 +151,7 @@ int	ft_printf(const char *format_str, ...)
 			process_char(&args, &format_flag, *format_str, &chrs_written);
 			process_string(&args, &format_flag, *format_str, &chrs_written);
 			process_int(&args, &format_flag, *format_str, &chrs_written);
+			process_uint(&args, &format_flag, *format_str, &chrs_written);
 			process_pointer(&args, &format_flag, *format_str, &chrs_written);
 			process_hex(&args, &format_flag, *format_str, &chrs_written);
 			if (format_flag == DONE)

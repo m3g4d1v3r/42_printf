@@ -1,6 +1,7 @@
 SRCS	= ft_printf.c \
-		  ft_putint_fd.c \
 		  ft_puthex_fd.c \
+		  ft_putint_fd.c \
+		  ft_putuint_fd.c \
 		  ft_putptr_fd.c
 OBJS	= ${SRCS:.c=.o}
 INCD	= ./

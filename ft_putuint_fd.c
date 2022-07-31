@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putint_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putuint_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msubtil- <msubtil-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/19 23:54:45 by msubtil-          #+#    #+#             */
-/*   Updated: 2022/07/31 12:34:49 by msubtil-         ###   ########.fr       */
+/*   Created: 2022/07/31 12:27:53 by msubtil-          #+#    #+#             */
+/*   Updated: 2022/07/31 12:35:42 by msubtil-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_base_ten_nbr(long n)
+static unsigned int	ft_base_uint_nbr(unsigned int n)
 {
-	int	base;
+	unsigned int	base;
 
 	base = 1;
 	while (n >= 10)
@@ -25,25 +25,17 @@ static int	ft_base_ten_nbr(long n)
 	return (base);
 }
 
-int	ft_putint_fd(int n, int fd)
+int	ft_putuint_fd(unsigned int n, int fd)
 {
-	long	aux_nb;
-	int		nbr_base;
-	char	chr_to_write;
-	int		chrs_written;
+	unsigned int	nbr_base;
+	unsigned int	chrs_written;
+	char			chr_to_write;
 
-	aux_nb = (long) n;
 	chrs_written = 0;
-	if (n < 0)
-	{
-		aux_nb *= -1;
-		write(fd, "-", 1);
-		chrs_written++;
-	}
-	nbr_base = ft_base_ten_nbr(aux_nb);
+	nbr_base = ft_base_uint_nbr(n);
 	while (nbr_base)
 	{
-		chr_to_write = (aux_nb / nbr_base) % 10 + '0';
+		chr_to_write = (n / nbr_base) % 10 + '0';
 		write(fd, &chr_to_write, 1);
 		chrs_written++;
 		nbr_base /= 10;
